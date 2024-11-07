@@ -1,0 +1,5 @@
+Links that might be helpful for building this project:
+[For Building Charts]   - https://www.chartjs.org/docs/latest/samples/animations/delay.html 
+[Design Inspo]          - https://dribbble.com/search/weather-chart, https://dribbble.com/shots/23159508-Weather-Forecast,
+                          https://dribbble.com/shots/24595289-AI-powered-weather-data-Lazarev
+[Weather API used]      - https://www.visualcrossing.com/weather/weather-data-services

@@ -5,9 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
 </head>
 <body>
+    <div class="weather-background"></div>
+    <div class="main-container">
+        <nav class="nav-bar">
+            <div class="logo-text">PanaHone</div>
+            <div class="search-container">
+                <input type="text" name="location" id="location" class="search-bar"/>
+                <button class="search-btn">Search</button>
+            </div>
+        </nav>
     
+        <div class="weather-info-container">
+            <!-- 
+                Textual Info to be displayed:
+                    • Searched Location:
+                    • Resolved Location:
+                    • Description:
+                    
+                To be charted:
+                    • Temperature
+                    • Precipitation
+            -->
+
+            <div class="left-section day-info-container">
+                <h3 class="day-condition">Rain, Partially cloudy</h1>
+                <p class="day-description">Becoming cloudy in the afternoon with storms possible within Tacloban City, Eastern Visayas, Philippines. Similar temperatures continuing with a chance of rain multiple days.</p>
+            
+                <div class="hourly-stats">
+                    
+                </div>
+            </div>
+            <div class="right-section weather-stats-container">
+                <h1 class="stat temp">20°C</h1>
+                <div class="other-stats">
+                    <h4 class="stat feelslike">Feels Like: 7 °C</h4>
+                    <h4 class="stat humid">Humidity: 41%</h4>
+                    <h4 class="stat wind">Wind: 23mph</h4>
+                </div>
+                <p class="location">- TACLOBAN CITY, EASTERN VISAYAS, PHILIPPINES</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
