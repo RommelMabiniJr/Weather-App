@@ -11,14 +11,16 @@
     <div class="weather-background"></div>
     <div class="main-container">
         <nav class="nav-bar">
-            <div class="logo-text">PanaHone</div>
+            <div class="logo-container">
+                <img class="weather-logo" src="./src/assets/icons/cloudy-day.png"></img>
+                <div class="logo-text">PanaHone</div>
+            </div>
             <div class="search-container">
                 <input type="text" name="location" id="location" class="search-bar"/>
-                <button class="search-btn">Search</button>
+                <button class="search-btn"><img class="search-icon" src="./src/assets/icons/magnifying-glass-black.svg"></img></button>
             </div>
         </nav>
-    
-        <div class="weather-info-container">
+        <div class="main-info-container">
             <!-- 
                 Textual Info to be displayed:
                     • Searched Location:
@@ -31,7 +33,7 @@
             -->
 
             <div class="left-section day-info-container">
-                <h3 class="day-condition">Rain, Partially cloudy</h1>
+                <h3 class="day-condition">Partially cloudy</h1>
                 <p class="day-description">Becoming cloudy in the afternoon with storms possible within Tacloban City, Eastern Visayas, Philippines. Similar temperatures continuing with a chance of rain multiple days.</p>
             
                 <div class="hourly-stats">
@@ -41,13 +43,92 @@
             <div class="right-section weather-stats-container">
                 <h1 class="stat temp">20°C</h1>
                 <div class="other-stats">
-                    <h4 class="stat feelslike">Feels Like: 7 °C</h4>
-                    <h4 class="stat humid">Humidity: 41%</h4>
-                    <h4 class="stat wind">Wind: 23mph</h4>
+                    <h4 class="stat feelslike">FEELS LIKE: 7 °C</h4>
+                    <h4 class="stat humid">HUMIDITY: 41%</h4>
+                    <h4 class="stat wind">WIND GUST: 1.6 km/h | WIND SPEED: 0.7 km/h</h4>
                 </div>
-                <p class="location">- TACLOBAN CITY, EASTERN VISAYAS, PHILIPPINES</p>
+                <p class="location">- Tacloban City, Eastern Visayas, Philippines</p>
             </div>
         </div>
+        <div class="sub-info-container">
+            <div class="slider-con">
+                <div class="prev-slider-container">
+                    <img class="prev-slider-btn" src="./src/assets/icons/left-chevron-black.png"></img>
+                </div>
+                <div class="cards-wrapper">
+                    <div class="cards-container">
+                        <div class="card hour-stat">
+                            <p class="time">12:00 AM</p>
+                            <img class="sub-weather-icon" class="weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat"> 
+                            <p class="time">1:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/rain.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">2:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/rain.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">3:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">4:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">76.9 °C</a>
+                                <a class="sub-feelslike">76.9 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">5:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">6:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                        <div class="card hour-stat">
+                            <p class="time">7:00 AM</p>
+                            <img class="sub-weather-icon" src="./src/assets/icons/cloudy.svg"></img>
+                            <div>
+                                <a class="sub-temp">77.3 °C</a>
+                                <a class="sub-feelslike">77.3 °C</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="next-slider-container">
+                    <img class="next-slider-btn" src="./src/assets/icons/right-chevron-black.png"></img>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>

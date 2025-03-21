@@ -8,9 +8,13 @@
     /* Colors */
     --white: #e5e5e5;
     --black: #181818;
+    --dark-gray: #838282;
+    --light-gray: #ababab;
 
-    --dark-transparent: rgba(0, 0, 0, 0.4);
-    --light-transparent: rgba(229, 229, 229, 0.4);
+
+    --dark-transparent: rgba(0, 0, 0, 0.5);
+    --light-transparent: rgba(229, 229, 229, 0.5);
+    --overlay-color: var(var(--light-transparent));
 
     /* Space sizes */
     --max-width: 1500px;
@@ -21,10 +25,10 @@
     /* Header sizes */
     --header-1: 75px;
     --header-2: 50px;
+    --header-3: 22.5px;
 }
 
 /* CSS Reset Start*/
-
 body, html {
     margin: 0;
     padding: 0;
@@ -32,6 +36,17 @@ body, html {
     height: 100%;
     overflow: hidden;
 }
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+
+input, button {
+	color: inherit;
+}
+
+
 
 /* CSS Reset End */
 
@@ -50,6 +65,12 @@ p, span, li, div {
     font-weight: 200;
 }
 
+input, textarea {
+    font-family: var(--body-font);
+    font-weight: 300;
+    font-size: .8em;
+}
+
 .weather-background {
     position: fixed;
     top: 0;
@@ -59,7 +80,7 @@ p, span, li, div {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(./src/assets/imgs/rain-2.jpg);
+    background-image: url(./src/assets/imgs/partially-cloudy.jpg);
     z-index: -1; /* Places background behind other content */
 }
 
@@ -70,7 +91,7 @@ p, span, li, div {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--light-transparent);
+    background-color: var(--overlay-color, var(--light-transparent)); /* Default to light transparent */
     z-index: 1;
 }
 
@@ -85,12 +106,30 @@ p, span, li, div {
 }
 
 .nav-bar, 
-.weather-info-container {
+.main-info-container {
     display: flex;
 }
 
 .nav-bar {
     justify-content: space-between;
+    margin-bottom: var(--sm-mg);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.weather-logo {
+    height: 20px;
+    width: 20px;
+}
+
+.main-info-container {
+    background-color: var(--light-transparent);
+    border-radius: 10px;
+    margin-bottom: var(--sm-mg);
 }
 
 .left-section,  .right-section {
@@ -105,6 +144,7 @@ p, span, li, div {
 
 .day-condition {
     font-size: var(--header-2);
+    
 }
 
 .day-description {
@@ -113,6 +153,7 @@ p, span, li, div {
 
 .temp {
     font-size: var(--header-1);
+    /* margin-top: var(--sm-mg); */
 }
 
 .other-stats h4 {
@@ -121,5 +162,114 @@ p, span, li, div {
 
 .logo-text {
     font-family: var(--heading-font);
+    font-weight: 600;
+}
+
+.search-bar {
+    border-radius: 3px;
+    padding-block: 5px;
+    padding-inline: 8px;
+    background: var(--light-transparent);
+    border: none;
+}
+
+.search-btn {
+    background: var(--light-transparent);
+    border-radius: 3px;
+    border: none;
+    height: 100%;
+    cursor: pointer;
+}
+
+.search-icon {
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+}
+
+.cards-wrapper {
+    position: relative;
+    flex: 1;
+    height: 300px;
+    z-index: -1;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0)); /* Fading effect on the right */
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0)); /* Non-webkit fallback */
+}
+
+.cards-container {
+    position: absolute;
+    display: flex;
+    gap: var(--md-mg);
+    width: 100%;
+}
+
+.cards-container > div.card {
+    position: relative;
+    background: var(--light-transparent);
+    padding-block: var(--sm-mg);
+    border-radius: 5px;
+    min-width: 180px;
+    padding-inline: var(--sm-mg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+div.card:nth-of-type(1) {
+    margin-left: var(--md-mg);
+}
+
+.sub-temp {
+    font-weight: 400;
+    margin-right: 10px;
+}
+
+.sub-feelslike {
+    font-weight: 300;
+    color: var(--gray);
+}
+
+.time {
+    font-size: var(--header-3);
     font-weight: 500;
+    margin-block: 0;
+}
+
+.sub-weather-icon {
+    height: 100px;
+    width: 120px;
+}
+
+.slider-con {
+    height: 189px;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
+.next-slider-container {
+    border-radius: 5px 20px 20px 5px;
+}
+
+.prev-slider-container {
+    border-radius: 20px 5px 5px 20px;
+}
+
+.next-slider-container,
+.prev-slider-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--sm-mg);
+    cursor: pointer;
+    background-color: var(--light-transparent);
+}
+
+.prev-slider-btn,
+.next-slider-btn {
+    height: 30px;
+    width: 80%;
 }
