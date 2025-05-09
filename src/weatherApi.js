@@ -15,16 +15,16 @@ const WeatherApiModule = (() => {
             }
 
             currentWeatherData = cleanWeatherData(await response.json());
-            return currentWeatherData;
+            return {...currentWeatherData, location: location};
         } catch (error) {
             console.error(error);
             throw new Error("Error fetching weather data");
         }
     };
 
-    const fetchWeatherDataDummy = async (location = "Ormoc") => {
+    const fetchWeatherDataDummy = async (location = "Ormoc", weather = "rain") => {
         try {
-            const response = await fetch("./src/data/dummyData.json");
+            const response = await fetch(`./src/data/${weather}.json`);
             if (!response.ok) {
                 throw new Error(`Error fetching dummy data: ${response.statusText}`);
             }
