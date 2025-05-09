@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <link rel="shortcut icon" href="./src/assets/icons/favicon.ico" type="image/x-icon" />
+    <title>PanaHone</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" type="module" defer></script>
 </head>
@@ -31,23 +32,32 @@
                     • Temperature
                     • Precipitation
             -->
-
-            <div class="left-section day-info-container">
-                <h3 class="day-condition">Partially cloudy</h1>
-                <p class="day-description">Becoming cloudy in the afternoon with storms possible within Tacloban City, Eastern Visayas, Philippines. Similar temperatures continuing with a chance of rain multiple days.</p>
-            
-                <div class="hourly-stats">
-                    
-                </div>
-            </div>
-            <div class="right-section weather-stats-container">
+            <div class="header">
+                <h3 class="day-condition">Partially cloudy</h3>
                 <h1 class="stat temp">20°C</h1>
-                <div class="other-stats">
-                    <h4 class="stat feelslike">FEELS LIKE: 7 °C</h4>
-                    <h4 class="stat humid">HUMIDITY: 41%</h4>
-                    <h4 class="stat wind">WIND GUST: 1.6 km/h | WIND SPEED: 0.7 km/h</h4>
+            </div>
+            <div class="content">
+                <div class="left-section day-info-container">
+                    <p class="day-description">Becoming cloudy in the afternoon with storms possible within Tacloban City, Eastern Visayas, Philippines. Similar temperatures continuing with a chance of rain multiple days.</p>
                 </div>
-                <p class="location">- Tacloban City, Eastern Visayas, Philippines</p>
+                <div class="right-section weather-stats-container">
+                    
+                    <div class="other-stats">
+                        <div class="sub-stat">
+                            <div class="stat-container">
+                                <h2 id="feelslikeVal" class="stat-value">7°C</h2>
+                                <h4 class="stat feelslike">FEELS LIKE: </h4>
+                            </div>
+                            <div class="stat-container">
+                                <h2 id="humidVal" class="stat-value">41%</h2>
+                                <h4 class="stat humid">HUMIDITY:</h4>
+                            </div>
+                        </div>
+                        <h4 class="stat humid"></h4>
+                        <h4 class="stat wind">WIND GUST: 1.6 km/h | WIND SPEED: 0.7 km/h</h4>
+                    </div>
+                    <p class="location">- Tacloban City, Eastern Visayas, Philippines</p>
+                </div>
             </div>
         </div>
         <div class="sub-info-container">
@@ -130,5 +140,6 @@
         </div>
         
     </div>
+    <div class="loader hidden"></div>
 </body>
 </html>

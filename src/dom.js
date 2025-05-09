@@ -1,5 +1,7 @@
 import WeatherApiModule from './weatherApi.js';
 import { WeatherData } from './weather.js';
+import HourStatCard from './components/HourStatCard.js';
+import { formatTo12Hour } from './utils/dateTimeUtils.js';
 
 const DOM = (function(document) {
     let weather;
@@ -8,13 +10,14 @@ const DOM = (function(document) {
 
     const _searchBarElem = document.querySelector(".search-bar");
     const _searchBtnElem = document.querySelector(".search-btn");
+    const _loader = document.querySelector(".loader");
 
     const _dayConditionHeader = document.querySelector(".day-condition");
     const _dayDescriptionSubHeader = document.querySelector(".day-description");
 
     const _statTempElem = document.querySelector(".temp")
-    const _statHumidElem = document.querySelector(".humid")
-    const _statFeelsLikeElem = document.querySelector(".feelslike")
+    const _statHumidElem = document.querySelector("#humidVal")
+    const _statFeelsLikeElem = document.querySelector("#feelslikeVal")
     const _statWindElem = document.querySelector(".wind")
 
     const _locationElement = document.querySelector(".location")
@@ -24,53 +27,96 @@ const DOM = (function(document) {
     const _mainContainer = document.querySelector(".main-container");
     const _searchIcon = document.querySelector(".search-icon");
     const _cardsContainer = document.querySelector(".cards-container");
-    const _cards = document.querySelectorAll(".card");
     const _nextSlideBtn = document.querySelector(".next-slider-container");
     const _prevSlideBtn = document.querySelector(".prev-slider-container");
     const _prevSlideIcon = document.querySelector(".prev-slider-btn");
     const _nextSlideIcon = document.querySelector(".next-slider-btn");
 
+    let _cards = document.querySelectorAll(".card"); // Initialize _cards to an empty NodeList
+
     const setupListeners = () => {
         _searchBtnElem.addEventListener("click", async () => {
-            if (_searchBarElem.value == "") return;
+            const locationValue = _searchBarElem.value.trim();
 
-            const data = await WeatherApiModule.fetchWeatherDataDummy(_searchBarElem.value);
-            console.log(data)
-            
-            weather = {
-                location: data.resolvedAddress,
-                conditions: data.currentConditions.conditions,
-                icon: data.icon,
-                description: `${data.days[0].description.slice(0, data.days[0].description.indexOf("."))} within ${data.resolvedAddress}. ${data.description.slice(0, data.description.indexOf("."))} is to be expected.`, 
-                temperature: data.currentConditions.temp, 
-                feelslike: data.currentConditions.feelslike, 
-                humidity: data.currentConditions.humidity, 
-                windgust: data.currentConditions.windgust, 
-                windspeed: data.currentConditions.windspeed
+            if (locationValue == "") {
+                _searchBarElem.classList.add("input-error");
+                _searchBarElem.placeholder = "Please enter a location";
+                return;
             }
 
-            updateUI();
+            _searchBarElem.classList.remove("input-error");
+            showLoader();
+
+            try {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                const data = await WeatherApiModule.fetchWeatherDataDummy(_searchBarElem.value, 'overcast');
+                // const data = await WeatherApiModule.fetchWeatherData(_searchBarElem.value);
+
+                console.log(data);
+        
+                weather = {
+                    location: data.resolvedAddress,
+                    conditions: data.days[0].conditions,
+                    icon: data.icon,
+                    description: `${data.days[0].description.slice(0, data.days[0].description.indexOf("."))} within ${data.resolvedAddress}. ${data.description.slice(0, data.description.indexOf("."))} is to be expected.`, 
+                    temperature: data.days[0].temp, 
+                    feelslike: data.days[0].feelslike, 
+                    humidity: data.days[0].humidity, 
+                    windgust: data.days[0].windgust, 
+                    windspeed: data.days[0].windspeed,
+                    hours: data.days[0].hours
+                };
+        
+                updateUI();
+            } catch (error) {
+                console.error("Weather fetch failed", error);
+                alert("Failed to fetch weather data. Please try again.");
+            } finally {
+                hideLoader();
+            }
         })
 
         _nextSlideBtn.addEventListener("click", goNextCardSlide);
         _prevSlideBtn.addEventListener("click", goPrevCardSlide);
     }
 
+    
+    const _createCards = (hoursData) => {
+        _cardsContainer.innerHTML = ""; // Clear existing cards
+        const cards = [];
+        
+        hoursData.forEach((hourData) => {
+            let time = formatTo12Hour(hourData.datetime);
+            let iconSrc = `./src/assets/icons/${hourData.icon}.svg`;
+
+            const card = HourStatCard(time, iconSrc, hourData.temp, hourData.feelslike);
+            cards.push(card);
+            _cardsContainer.appendChild(card);
+        });
+
+        _cards = document.querySelectorAll(".card"); // Update the cards variable to include newly created cards
+    }
+
     const updateUI = () => {
+        _createCards(weather.hours);
+
         _dayConditionHeader.innerText = weather.conditions;
         _dayDescriptionSubHeader.innerText = weather.description;
 
         _statTempElem.innerText = `${weather.temperature} °C`;
-        _statFeelsLikeElem.innerText = `FEELS LIKE: ${weather.feelslike} °C`;
-        _statHumidElem.innerText = `HUMIDITY: ${weather.humidity} %`;
+        _statFeelsLikeElem.innerText = `${weather.feelslike} °C`;
+        _statHumidElem.innerText = `${weather.humidity} %`;
         _statWindElem.innerText = `WIND GUST: ${weather.windgust} km/h | WIND SPEED: ${weather.windspeed} km/h`;
         _locationElement.innerText = `- ${weather.location}`
 
-        setBackground(`${weather.conditions.slice(0, weather.conditions.indexOf(","))}`)
+        let condition = weather.conditions.includes(",") 
+            ? weather.conditions.slice(0, weather.conditions.indexOf(",")) 
+            : weather.conditions; // Use full string if no comma
+        setBackground(condition);
     }
 
     const setBackground = (condition) => {
-        console.log(condition)
         const black = 'var(--black)';
         const white = 'var(--white)';
         const darkOpacity = 'var(--dark-transparent)';
@@ -101,8 +147,8 @@ const DOM = (function(document) {
                 break;
             case 'Snow':
                 backgroundUrl = 'url(./src/assets/imgs/snow.jpg)';
-                overlayColor = lightOpacity;
-                textColor = black;
+                overlayColor = darkOpacity;
+                textColor = white;
                 break;
             default:
                 backgroundUrl = 'url(./src/assets/imgs/default.jpg)';
@@ -165,6 +211,9 @@ const DOM = (function(document) {
         // Apply the new left position
         _cardsContainer.style.left = `${newLeft}px`;
     }
+
+    const showLoader = () => _loader.classList.remove("hidden");
+    const hideLoader = () => _loader.classList.add("hidden");
 
     return {
         setupListeners,
